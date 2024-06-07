@@ -18,8 +18,13 @@ export type IVideoStatus = {
 	videoId: string
 }
 
-export type VideoNavigation = {
+export type IVideoNavigation = {
 	id: string
-	current: Video
-	previous: Video
+	currentVideo?: Video
+	previousVideo?: Video
+}
+
+export type CurrentVideo = {
+	currentVideo: Video
+	videoStatus: IVideoStatus
 }

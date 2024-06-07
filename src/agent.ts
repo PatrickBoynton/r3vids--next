@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios"
-import { IVideoStatus, Video, VideoNavigation } from "./types"
+import { IVideoNavigation, IVideoStatus, Video } from "./types"
 
 axios.defaults.baseURL = `http://192.168.1.13:5070/api`
 // axios.defaults.withCredentials = true
@@ -12,6 +12,8 @@ const requests = {
 		axios.post<T>(url, body).then(responseBody),
 	put: <T>(url: string, body: object) =>
 		axios.put<T>(url, body).then(responseBody),
+	patch: <T>(url: string, body: object) =>
+		axios.patch<T>(url, body).then(responseBody),
 	delete: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
@@ -21,15 +23,7 @@ const Videos = {
 	random: (query?: string) => requests.get<Video>(`/videos/random${query}`),
 	randomPlayed: () => requests.get<Video>("/videos/random/played"),
 	update: (video: Video) =>
-		requests.put<Video>(`/videos/${video.id}`, {
-			id: video.id,
-			title: video.title,
-			url: video.url,
-			image: video.image,
-			uploadDate: video.uploadDate,
-			duration: video.duration,
-			videoStatus: video.videoStatus,
-		}),
+		requests.patch(`/videos/update/${video.id}`, video),
 	search: (query: string) => requests.get<Video[]>(`/videos/search/${query}`),
 	delete: () => requests.delete<Video>("/videos/reset"),
 }
@@ -39,12 +33,21 @@ const VideoStatus = {
 	status: (id: string) => requests.get<IVideoStatus>(`/status/${id}`),
 }
 
-const Navigation = {
-	get: (id: string) => requests.get<VideoNavigation>(`/navigation/${id}`),
-	update: (id: string) =>
-		requests.put<VideoNavigation>(`/navigation/${id}`, {}),
+const VideoNavigation = {
+	get: () => requests.get<Video>("/navigation"),
+	create: (video: Video) =>
+		requests.post<IVideoNavigation>("/navigation", {
+			currentVideo: video.id,
+			previousVideo: null,
+		}),
+	update: (currentVideo?: Video) =>
+		requests.put("/navigation:", {
+			currentVideo: currentVideo?.id || null,
+			previousVideo: null,
+		}),
+	delete: () => requests.delete("/navigation"),
 }
 
-const agent = { Videos, VideoStatus, Navigation }
+const agent = { Videos, VideoStatus, VideoNavigation }
 
 export default agent
