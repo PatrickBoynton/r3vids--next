@@ -1,11 +1,12 @@
+"use client"
 import { VolumeOff, VolumeUp } from "@mui/icons-material"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
 
 export const Volume = () => {
 	const { isMuted, setIsMuted, vidRef } = useVideoControlsStore()
 	const handleVolumeChange = () => {
-		setIsMuted(!isMuted)
 		if (vidRef.current) {
+			setIsMuted(!isMuted)
 			vidRef.current.muted = !vidRef.current.muted
 		}
 	}
