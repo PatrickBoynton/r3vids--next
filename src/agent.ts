@@ -41,7 +41,7 @@ const VideoNavigation = {
 			previousVideo: null,
 		}),
 	update: (currentVideo?: Video) =>
-		requests.put("/navigation:", {
+		requests.put("/navigation", {
 			currentVideo: currentVideo?.id || null,
 			previousVideo: null,
 		}),
