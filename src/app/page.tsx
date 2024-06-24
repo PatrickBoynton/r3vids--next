@@ -4,9 +4,9 @@ import { VideosContainer } from "@/app/components/containers/VideosContainer"
 
 export default function Home() {
 	return (
-		<div className="container">
+		<div>
 			<Navbar />
-			<main>
+			<main className="grid grid-cols-2  gap-4 h-screen">
 				<VideoPlayer />
 				<VideosContainer type="videos" />
 				<VideosContainer type="played" />
