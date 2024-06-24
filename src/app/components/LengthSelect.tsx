@@ -6,7 +6,11 @@ export const LengthSelect = () => {
 	const { setQuery } = useVideoStore()
 
 	return (
-		<select id="length" defaultValue="all" onChange={() => {}}>
+		<select
+			id="length"
+			defaultValue="all"
+			onChange={() => {}}
+			className="border-2 rounded p-1 ml-2 mt-2 bg-primary">
 			<option value="all">All</option>
 			<option
 				value="0-10"
