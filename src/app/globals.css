@@ -1,226 +1,232 @@
-*, *:before, *:after {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-}
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-body {
-	background-color: #201449;
-	color: #FFDB60;
-}
+/**, *:before, *:after {*/
+/*	box-sizing: border-box;*/
+/*	padding: 0;*/
+/*	margin: 0;*/
+/*}*/
 
-svg {
-	/* The svgs won't  change height or shape otherwise.
-	I didn't feel like  figuring out specific elements to target.*/
-	height: 30px !important;
-	width: 30px !important;
-	vertical-align: middle;
-}
-
-input {
-	vertical-align: middle;
-	border: 3px solid #FFDB60;
-	padding: 5px 10px;
-	border-radius: 5px;
-	margin-right: 10px;
-	background-color: #201449;
-	color: #FFDB60;
-}
-
-input:focus {
-	border: 3px dashed #FFDB60;
-	outline: none;
-}
-
-input[type="range"] {
-	height: 5px;
-	padding: 0 30px;
-	appearance: none;
-	background-color: #FFDB60;
-}
-
-input[type="range"]::-moz-range-thumb {
-	appearance: none;
-	width: 20px;
-	height: 20px;
-	background-color: #201449;
-	border: 2px solid #FFDB60;
-	border-radius: 50%;
-}
-
-select {
-	border: 2px solid #FFDB60;
-	background-color: #201449;
-	color: #FFDB60;
-	border-radius: 5px;
-	padding: 5px;
-}
-
-.container {
-	display: grid;
-	grid-template-areas:
-		"navbar navbar navbar"
-		"main main main";
-	grid-template-columns: 1fr 1fr 1fr;
-}
-
-.navbar {
-	grid-area: navbar;
-	padding: 10px;
-}
-
-.navbar ul {
-	display: flex;
-	justify-content: space-between;
-	list-style: none;
-}
-
-main {
-	grid-area: main;
-	display: grid;
-	grid-template-areas:
-		"video-player video-player videos"
-		"played played videos";
-	grid-template-columns: 1fr 1fr 1fr;
-}
-
-.video-container {
-	grid-area: video-player;
-	position: relative;
-}
-
-video {
-	width: 90%;
-	height: 550px;
-}
-
-.video-controls {
-	padding: 10px;
-	width: 90%;
-	border: 2px solid #FFDB60;
-}
-
-.video-controls:fullscreen {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
+/*body {*/
+/*background-color: #201449;*/
+/*color: #FFDB60;*/
+/*	font-size: 16px;*/
+/*}*/
 
 
-.video-controls button {
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-}
+/*svg {*/
+/*	!* The svgs won't  change height or shape otherwise.*/
+/*	I didn't feel like  figuring out specific elements to target.*!*/
+/*	height: 30px !important;*/
+/*	width: 30px !important;*/
+/*	vertical-align: middle;*/
+/*}*/
 
-button svg {
-	color: #FFDB60;
-}
+/*input {*/
+/*	vertical-align: middle;*/
+/*	border: 3px solid #FFDB60;*/
+/*	padding: 5px 10px;*/
+/*	border-radius: 5px;*/
+/*	margin-right: 10px;*/
+/*	background-color: #201449;*/
+/*	color: #FFDB60;*/
+/*}*/
 
-.videos-container {
-	grid-area: videos;
-	overflow: auto;
-	max-height: 90vh;
-	grid-gap: 10px;
-	justify-content: center;
-	margin-top: 83px;
-	padding: 20px;
-	border: 2px solid #FFDB60;
-	border-radius: 5px;
-}
+/*input:focus {*/
+/*	border: 3px dashed #FFDB60;*/
+/*	outline: none;*/
+/*}*/
 
-.videos-container button {
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-}
+/*input[type="range"] {*/
+/*	height: 5px;*/
+/*	padding: 0 30px;*/
+/*	appearance: none;*/
+/*	background-color: #FFDB60;*/
+/*}*/
 
-.videos-container:first-child {
-	margin-top: 0 !important;
-}
+/*input[type="range"]::-moz-range-thumb {*/
+/*	appearance: none;*/
+/*	width: 20px;*/
+/*	height: 20px;*/
+/*	background-color: #201449;*/
+/*	border: 2px solid #FFDB60;*/
+/*	border-radius: 50%;*/
+/*}*/
 
-.videos {
-	/*border: 2px solid #FFDB60;*/
-	border-radius: 5px;
-	padding: 10px;
-	margin-top: 20px;
-	cursor: pointer;
-}
+/*select {*/
+/*	border: 2px solid #FFDB60;*/
+/*	background-color: #201449;*/
+/*	color: #FFDB60;*/
+/*	border-radius: 5px;*/
+/*	padding: 5px;*/
+/*}*/
 
-.videos:hover {
-	background-color: #5834CE;;
-	color: #FFDB60;
-}
+/*.container {*/
+/*	display: grid;*/
+/*	grid-template-areas:*/
+/*		"navbar navbar navbar"*/
+/*		"main main main";*/
+/*	grid-template-columns: 1fr 1fr 1fr;*/
+/*}*/
 
-.played-container {
-	grid-area: played;
-	display: flex;
-	overflow: auto;
-	max-width: 60vw;
-	height: auto;
-	grid-gap: 10px;
-}
+/*.navbar {*/
+/*	grid-area: navbar;*/
+/*	padding: 10px;*/
+/*}*/
 
-.played-container .videos {
-	border: 2px solid #FFDB60;
-}
+/*.navbar ul {*/
+/*	display: flex;*/
+/*	justify-content: space-between;*/
+/*	list-style: none;*/
+/*}*/
 
-.played-container button {
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-}
+/*main {*/
+/*	grid-area: main;*/
+/*	display: grid;*/
+/*	grid-template-areas:*/
+/*		"video-player video-player videos"*/
+/*		"played played videos";*/
+/*	grid-template-columns: 1fr 1fr 1fr;*/
+/*}*/
 
-.played-container .played {
-	border-radius: 5px;
-	height: 150px;
-	padding: 10px;
-	cursor: pointer;
-}
+/*.video-container {*/
+/*	grid-area: video-player;*/
+/*	position: relative;*/
+/*}*/
+
+/*video {*/
+/*	width: 90%;*/
+/*	height: 550px;*/
+/*}*/
+
+/*.video-controls {*/
+/*	padding: 10px;*/
+/*	width: 90%;*/
+/*	border: 2px solid #FFDB60;*/
+/*}*/
+
+/*.video-controls:fullscreen {*/
+/*	position: absolute;*/
+/*	bottom: 0;*/
+/*	width: 100%;*/
+/*}*/
 
 
-.played:hover {
-	background-color: #5834CE;;
-	color: #FFDB60;
-}
+/*.video-controls button {*/
+/*	border: none;*/
+/*	background-color: transparent;*/
+/*	cursor: pointer;*/
+/*}*/
 
-.filter {
-	margin: 20px;
-}
+/*button svg {*/
+/*	color: #FFDB60;*/
+/*}*/
 
-.filter label {
-	margin-right: 20px;
-}
+/*.videos-container {*/
+/*	grid-area: videos;*/
+/*	overflow: auto;*/
+/*	max-height: 90vh;*/
+/*	grid-gap: 10px;*/
+/*	justify-content: center;*/
+/*	margin-top: 83px;*/
+/*	padding: 20px;*/
+/*	border: 2px solid #FFDB60;*/
+/*	border-radius: 5px;*/
+/*}*/
+
+/*.videos-container button {*/
+/*	border: none;*/
+/*	background-color: transparent;*/
+/*	cursor: pointer;*/
+/*}*/
+
+/*.videos-container:first-child {*/
+/*	margin-top: 0 !important;*/
+/*}*/
+
+/*.videos {*/
+/*	!*border: 2px solid #FFDB60;*!*/
+/*	border-radius: 5px;*/
+/*	padding: 10px;*/
+/*	margin-top: 20px;*/
+/*	cursor: pointer;*/
+/*}*/
+
+/*.videos:hover {*/
+/*	background-color: #5834CE;;*/
+/*	color: #FFDB60;*/
+/*}*/
+
+/*.played-container {*/
+/*	grid-area: played;*/
+/*	display: flex;*/
+/*	overflow: auto;*/
+/*	max-width: 60vw;*/
+/*	height: auto;*/
+/*	grid-gap: 10px;*/
+/*}*/
+
+/*.played-container .videos {*/
+/*	border: 2px solid #FFDB60;*/
+/*}*/
+
+/*.played-container button {*/
+/*	border: none;*/
+/*	background-color: transparent;*/
+/*	cursor: pointer;*/
+/*}*/
+
+/*.played-container .played {*/
+/*	border-radius: 5px;*/
+/*	height: 150px;*/
+/*	padding: 10px;*/
+/*	cursor: pointer;*/
+/*}*/
 
 
-/* For Safari */
-@supports not (scrollbar-width: thin) {
-	svg {
-		height: 48px !important;
-		width: 48px !important;
-	}
+/*.played:hover {*/
+/*	background-color: #5834CE;;*/
+/*	color: #FFDB60;*/
+/*}*/
 
-	.videos-container {
-		max-height: 65vh;
-	}
+/*.filter {*/
+/*	margin: 20px;*/
+/*}*/
 
-	.video-controls {
-		padding: 10px;
-		width: 100%;
-		border: 2px solid #FFDB60;
-	}
+/*.filter label {*/
+/*	margin-right: 20px;*/
+/*}*/
 
-	.filter {
-		margin-top: 20px;
-		margin-left: 20px;
-		font-size: 32px;
-	}
 
-	.filter select {
-		font-size: 20px;
-	}
+/*!* For Safari *!*/
+/*@supports not (scrollbar-width: thin) {*/
+/*	svg {*/
+/*		height: 48px !important;*/
+/*		width: 48px !important;*/
+/*	}*/
 
-	video {
-		width: 100%;
-	}
-}
+/*	.videos-container {*/
+/*		max-height: 65vh;*/
+/*	}*/
+
+/*	.video-controls {*/
+/*		padding: 10px;*/
+/*		width: 100%;*/
+/*		border: 2px solid #FFDB60;*/
+/*	}*/
+
+/*	.filter {*/
+/*		margin-top: 20px;*/
+/*		margin-left: 20px;*/
+/*		font-size: 32px;*/
+/*	}*/
+
+/*	.filter select {*/
+/*		font-size: 20px;*/
+/*	}*/
+
+/*	video {*/
+/*		width: 100%;*/
+/*	}*/
+/*}*/
