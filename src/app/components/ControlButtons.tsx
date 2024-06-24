@@ -14,7 +14,7 @@ export const ControlButtons = () => {
 	const { randomVideo } = useVideoStore()
 	useEffect(() => {}, [randomVideo])
 	return (
-		<div className="video-controls">
+		<div className="border-2 p-2 rounded">
 			<PlayPause />
 			<Random />
 			<RandomPlayed />
