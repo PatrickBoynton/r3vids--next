@@ -8,8 +8,8 @@ import {
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar">
-			<ul>
+		<nav className="p-3">
+			<ul className="flex justify-between">
 				<li id="slow">
 					<SlowMotionVideo /> R3vids
 				</li>
@@ -19,6 +19,7 @@ export const Navbar = () => {
 						type="text"
 						name="search"
 						id="search"
+						className="py-1 px-2 items-center border-2 rounded   bg-primary  mr-2 placeholder-secondary"
 						placeholder="Search for videos"
 					/>
 					<label htmlFor="search">
