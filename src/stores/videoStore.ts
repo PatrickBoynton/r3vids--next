@@ -86,7 +86,6 @@ export const useVideoStore = create<VideoStore>(set => ({
 	},
 	setRandomPlayedVideo: async () => {
 		const randomPlayedVideo: Video = await agent.Videos.randomPlayed()
-		console.log("randomPlayedVideo", randomPlayedVideo)
 
 		set(state => ({
 			...state,
