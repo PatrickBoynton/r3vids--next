@@ -1,17 +1,21 @@
-import { Video } from "@/types"
+import { CurrentVideo, Video } from "@/types"
 import { create } from "zustand"
-import agent from "@/agent"
 import qs from "query-string"
+import agent from "@/agent"
 
 type VideoStore = {
 	src: string
 	title: string
+	url: string
+	image: string
+	uploadDate: string
+	duration: number
 	query: string
 	value: string
 	videos: Video[]
 	playedVideos: Video[]
 	randomVideo: Video | null
-	currentVideo: Video | null
+	currentVideo: CurrentVideo | Video | null
 	randomPlayedVideo: Video | null
 	setVideos: () => void
 	setRandomVideo: (queryType?: string, queryValue?: string) => void
@@ -22,11 +26,20 @@ type VideoStore = {
 	updateVideo: (video: Video) => void
 	resetVideoStatus: () => void
 	setQuery: (query: string) => void
+	setCurrentVideo: () => void
+	setUrl: (url: string) => void
+	setImage: (image: string) => void
+	setUploadDate: (uploadDate: string) => void
+	setDuration: (duration: number) => void
 }
 
 export const useVideoStore = create<VideoStore>(set => ({
 	src: "",
 	title: "",
+	url: "",
+	image: "",
+	uploadDate: "",
+	duration: 0,
 	query: "",
 	value: "",
 	videos: [],
@@ -49,46 +62,40 @@ export const useVideoStore = create<VideoStore>(set => ({
 			{ url: "", query },
 			{ skipEmptyString: true }
 		)
-		const currentVideo: Video | null = JSON.parse(
-			localStorage.getItem("currentVideo") as string
-		)
-		const videos = await agent.Videos.list()
-		if (currentVideo === null) {
-			const randomVideo: Video = await agent.Videos.random(url)
-			localStorage.setItem("currentVideo", JSON.stringify(randomVideo))
 
-			set(state => ({
-				...state,
-				videos,
-				src: randomVideo.url,
-				title: randomVideo.title,
-				currentVideo: randomVideo,
-			}))
-		} else {
-			set(state => ({
-				...state,
-				videos,
-				src: currentVideo?.url,
-				title: currentVideo.title,
-				currentVideo,
-			}))
-		}
+		const randomVideo: Video = await agent.Videos.random(url)
+
+		set(state => ({
+			...state,
+			duration: randomVideo.duration,
+			randomVideo,
+		}))
+
+		await agent.Videos.update(randomVideo)
+		await agent.VideoNavigation.update(randomVideo)
+		await agent.Videos.list()
+		await agent.Videos.played()
 	},
+
 	setPlayedVideos: async () => {
-		const videos: Video[] = await agent.Videos.list()
+		const videos: Video[] = await agent.Videos.played()
 		const playedVideos = videos.filter(
 			(video: Video) => video.videoStatus.played
 		)
-
 		set(state => ({ ...state, playedVideos }))
 	},
 	setRandomPlayedVideo: async () => {
 		const randomPlayedVideo: Video = await agent.Videos.randomPlayed()
-		set({
+		console.log("randomPlayedVideo", randomPlayedVideo)
+
+		set(state => ({
+			...state,
 			randomPlayedVideo,
-			src: randomPlayedVideo.url,
-			title: randomPlayedVideo.title,
-		})
+		}))
+		await agent.Videos.update(randomPlayedVideo)
+		await agent.VideoNavigation.update(randomPlayedVideo)
+		// await agent.Videos.list()
+		await agent.Videos.played()
 	},
 	setSrc: (src: string) => set({ src }),
 	setTitle: (title: string) => set({ title }),
@@ -97,11 +104,26 @@ export const useVideoStore = create<VideoStore>(set => ({
 	},
 	resetVideoStatus: async () => {
 		await agent.Videos.delete()
-		const videos: Video[] = await agent.Videos.list()
-		const playedVideos = videos.filter(video => video.videoStatus.played)
-
-		set({ videos, playedVideos })
-		localStorage.removeItem("currentVideo")
+		const playedVideos = await agent.Videos.played()
+		set(state => ({ ...state, playedVideos, currentVideo: null }))
 	},
 	setQuery: (query: string) => set({ query }),
+
+	setCurrentVideo: async () => {
+		const currentVideo = await agent.VideoNavigation.get()
+		set(state => ({
+			...state,
+			currentVideo,
+			url: currentVideo?.currentVideo.url,
+			title: currentVideo?.currentVideo.title,
+		}))
+	},
+
+	setUrl: (url: string) => set({ url }),
+
+	setImage: (image: string) => set({ image }),
+
+	setUploadDate: (uploadDate: string) => set({ uploadDate }),
+
+	setDuration: (duration: number) => set({ duration }),
 }))
