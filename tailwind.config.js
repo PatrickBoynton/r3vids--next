@@ -29,6 +29,9 @@ module.exports = {
           width: "35px !important",
           height: "35px !important",
         },
+        video: {
+          height: "600px",
+        },
       });
     },
   ],
