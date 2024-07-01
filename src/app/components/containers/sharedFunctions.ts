@@ -2,34 +2,45 @@ import { Video } from "@/types"
 import { useVideoStore } from "@/stores/videoStore"
 
 export const handleClick = (video?: Video) => {
-	console.log("video", video)
 	if (video) {
-		useVideoStore.getState().setUrl(video.url)
-		useVideoStore.getState().setTitle(video.title)
+		setState(video)
+	} else {
+		useVideoStore.getState().setRandomPlayedVideo()
 
-		useVideoStore.getState().updateVideo(video)
-		useVideoStore.getState().setVideos()
-		useVideoStore.getState().setPlayedVideos()
-		// useVideoStore.getState().setCurrentVideo(video)
+		const playedVideo = useVideoStore.getState().randomPlayedVideo as Video
+		setState(playedVideo)
 	}
+
+	setVideos()
 }
 
 export const handleRandomClick = async () => {
 	useVideoStore.getState().setRandomVideo()
 
 	const randomVideo = useVideoStore.getState().randomVideo as Video
+
 	if (randomVideo) {
-		useVideoStore.getState().setUrl(randomVideo.url)
-		useVideoStore.getState().setTitle(randomVideo.title)
+		setState(randomVideo)
 	}
 
-	useVideoStore.getState().setVideos()
-	useVideoStore.getState().setPlayedVideos()
-	// useVideoStore.getState().setCurrentVideo(randomVideo)
+	setVideos()
 }
 
 export const convertDuration = (duration: number) => {
-	const minutes = Math.floor(duration / 60)
+	const hours = Math.floor(duration / 3600)
+	const minutes = Math.floor((duration - hours * 3600) / 60)
 	const seconds = duration - minutes * 60
-	return duration ? `${minutes}:${seconds.toFixed(2)}` : "00:00"
+	return duration ? `${hours}:${minutes}:${seconds.toFixed(0)}` : "00:00"
+}
+
+const setState = (video: Video) => {
+	if (video) {
+		useVideoStore.getState().setUrl(video.url)
+		useVideoStore.getState().setTitle(video.title)
+	}
+}
+
+const setVideos = () => {
+	useVideoStore.getState().setVideos()
+	useVideoStore.getState().setPlayedVideos()
 }
