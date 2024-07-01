@@ -12,8 +12,7 @@ type Props = {
 }
 
 export const VideosContainer = ({ type }: Props) => {
-	const { videos, setPlayedVideos, playedVideos, randomVideo, currentVideo } =
-		useVideoStore()
+	const { videos, setPlayedVideos, playedVideos } = useVideoStore()
 
 	const whatType = type === "played" ? playedVideos : videos
 
@@ -30,17 +29,17 @@ export const VideosContainer = ({ type }: Props) => {
 
 	useEffect(() => {
 		setPlayedVideos()
-	}, [setPlayedVideos, randomVideo])
+	}, [setPlayedVideos])
 
 	return (
 		<div
-			className={`${type}-container ${type === "played" ? "flex overflow-y-auto  cursor-pointer " : " overflow-auto  cursor-pointer"}`}>
+			className={`${type}-container ${type === "played" ? "flex overflow-y-auto  " : " overflow-auto  max-h-[80vh]"}`}>
 			{sortedVideos().map((video: Video) => (
 				<div
 					className="videos"
 					key={video.id}
 					onClick={() => handleClick(video)}>
-					<div className={`${type}-container w-fit`}>
+					<div className={`${type}-container w-fit cursor-pointer`}>
 						<div className="source border-2 m-2 p-2 rounded">
 							<h3 className="border-2 p-1 rounded">
 								{video.title}
