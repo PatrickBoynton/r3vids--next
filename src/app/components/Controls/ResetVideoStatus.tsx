@@ -1,4 +1,3 @@
-"use client"
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep"
 import { useVideoStore } from "@/stores/videoStore"
 

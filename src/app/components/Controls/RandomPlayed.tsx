@@ -1,10 +1,9 @@
-import { useVideoStore } from "@/stores/videoStore"
 import { ManageHistory } from "@mui/icons-material"
+import { handleClick } from "@/app/components/containers/sharedFunctions"
 
 export const RandomPlayed = () => {
-	const { setRandomPlayedVideo } = useVideoStore()
 	return (
-		<button id="random-played" onClick={() => setRandomPlayedVideo()}>
+		<button id="random-played" onClick={() => handleClick()}>
 			<ManageHistory />
 		</button>
 	)
