@@ -16,7 +16,5 @@ const getIpAddress = (): string | undefined => {
 			if (ipAddress) break
 		}
 	}
-
-	console.log("getIpAddress: ", ipAddress)
 	return ipAddress
 }
