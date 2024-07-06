@@ -14,7 +14,7 @@ export type IVideoStatus = {
 	playCount: number
 	isWatchLater: boolean
 	lastPlayed: string
-	video: Video
+	video: Video | null
 	videoId: string
 }
 
