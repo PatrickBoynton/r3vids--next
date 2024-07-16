@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
 
 axios.defaults.baseURL = `http://192.168.1.13:5070/api`
-// axios.defaults.withCredentials = true
 
 const responseBody = (response: AxiosResponse) => response.data
 
@@ -40,6 +39,7 @@ const VideoNavigation = {
 			currentVideo: video.id,
 			previousVideo: null,
 		}),
+
 	update: (currentVideo?: Video) =>
 		requests.put("/navigation", {
 			currentVideo: currentVideo?.id || null,
