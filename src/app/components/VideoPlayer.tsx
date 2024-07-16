@@ -21,12 +21,16 @@ export const VideoPlayer = () => {
 	const videoRef = useRef<HTMLVideoElement>(null)
 
 	useEffect(() => {
+		const fetch = async () => {
+			return await agent.VideoNavigation.get()
+		}
+
 		if (!currentVideo) {
-			setCurrentVideo()
+			fetch().finally(() => setCurrentVideo())
 		} else {
 			setVideos()
 		}
-	}, [currentVideo, setRandomVideo, setVideos, setCurrentVideo])
+	}, [currentVideo, setRandomVideo, setVideos, setCurrentVideo, randomVideo])
 
 	useEffect(() => {
 		setVidRef(videoRef)
