@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
 
-axios.defaults.baseURL = `http://192.168.1.13:5070/api`
-
+axios.defaults.baseURL = `http://192.168.1.8												:5070/api`
+// getIpAddress()
 const responseBody = (response: AxiosResponse) => response.data
 
 const requests = {

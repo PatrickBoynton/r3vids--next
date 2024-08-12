@@ -3,10 +3,17 @@ import { Pause, PlayArrow } from "@mui/icons-material"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
 import { useVideoStore } from "@/stores/videoStore"
 import { useEffect } from "react"
+import { Video } from "@/types"
 
 export const PlayPause = () => {
 	const { isPlaying, setIsPlaying, setIsMuted } = useVideoControlsStore()
-	const { updateVideo, randomVideo } = useVideoStore()
+	const {
+		updateVideo,
+		randomVideo,
+		setCurrentPlayTime,
+		currentPlayTime,
+		currentVideo,
+	} = useVideoStore()
 	const { vidRef } = useVideoControlsStore()
 	const isPaused = vidRef?.current?.paused
 
@@ -24,6 +31,10 @@ export const PlayPause = () => {
 		if (isPlaying && !vidRef.current?.paused) {
 			vidRef.current?.addEventListener("pause", () => {
 				setIsPlaying(false)
+
+				setCurrentPlayTime(currentTime as number)
+
+				updateVideo(currentVideo as Video)
 			})
 			vidRef.current.addEventListener("webkitendfullscreen", () => {
 				setIsPlaying(false)

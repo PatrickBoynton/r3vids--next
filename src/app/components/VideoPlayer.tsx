@@ -4,8 +4,8 @@ import { LengthSelect } from "@/app/components/LengthSelect"
 import { useEffect, useRef } from "react"
 import { useVideoStore } from "@/stores/videoStore"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
-import agent from "@/agent"
 import { Video } from "@/types"
+import agent from "@/agent"
 
 export const VideoPlayer = () => {
 	const {
@@ -16,20 +16,24 @@ export const VideoPlayer = () => {
 		setCurrentVideo,
 		randomVideo,
 		setVideos,
+		currentPlayTime,
+		createVideoNavigation,
 	} = useVideoStore()
-	const { setVidRef, vidRef, setIsPlaying } = useVideoControlsStore()
+	const { setVidRef, vidRef } = useVideoControlsStore()
 	const videoRef = useRef<HTMLVideoElement>(null)
 
 	useEffect(() => {
-		const fetch = async () => {
-			return await agent.VideoNavigation.get()
-		}
+		// If there is no current video set it. This is for keeping the video list state up to date. DO NOT CHANGE.
+		const setVids = async () => {
+			if (!currentVideo) {
+				setCurrentVideo()
 
-		if (!currentVideo) {
-			fetch().finally(() => setCurrentVideo())
-		} else {
-			setVideos()
+				setVideos()
+			} else {
+				setVideos()
+			}
 		}
+		setVids()
 	}, [currentVideo, setRandomVideo, setVideos, setCurrentVideo, randomVideo])
 
 	useEffect(() => {
@@ -40,11 +44,18 @@ export const VideoPlayer = () => {
 		const getNavigation = async () => {
 			const nav = await agent.VideoNavigation.get()
 			if (randomVideo !== null && nav === null)
-				await agent.VideoNavigation.create(randomVideo as Video)
+				createVideoNavigation(randomVideo as Video)
 		}
 		getNavigation()
 	}, [randomVideo])
 
+	// useEffect(() => {
+	// 	createVideoNavigation(randomVideo as Video)
+	// }, [randomVideo, createVideoNavigation])
+
+	vidRef.current?.addEventListener("loadedmetadata", () => {
+		if (vidRef.current) vidRef.current.currentTime = currentPlayTime
+	})
 	return (
 		<div>
 			<h1 className="text-5xl  border-t-2">{title}</h1>
@@ -52,6 +63,7 @@ export const VideoPlayer = () => {
 				className="w-full"
 				ref={videoRef}
 				key={url}
+				controls
 				src={url}></video>
 			<div className="p-2">
 				<ControlButtons />
@@ -62,7 +74,6 @@ export const VideoPlayer = () => {
 			</div>
 		</div>
 	)
-	3
 }
 
 export default VideoPlayer
