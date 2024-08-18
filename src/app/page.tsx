@@ -6,11 +6,18 @@ export default function Home() {
 	return (
 		<div>
 			<Navbar />
-			<main className="grid grid-cols-2  gap-4 h-screen">
-				<VideoPlayer />
-				<VideosContainer type="videos" />
-				<VideosContainer type="played" />
+			<main className="grid grid-cols-3 gap-4 h-screen">
+				<div className="col-span-2">
+					<VideoPlayer />
+				</div>
+				<div className="col-span-1">
+					<VideosContainer type="videos" />
+				</div>
+				<div className="col-span-3">
+					<VideosContainer type="played" />
+				</div>
 			</main>
+			<footer></footer>
 		</div>
 	)
 }
