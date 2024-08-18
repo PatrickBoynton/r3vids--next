@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
 
-axios.defaults.baseURL = `http://192.168.1.8												:5070/api`
+axios.defaults.baseURL = `http://192.168.1.8:5070/api`
 // getIpAddress()
 const responseBody = (response: AxiosResponse) => response.data
 
@@ -20,6 +20,7 @@ const Videos = {
 	list: () => requests.get<Video[]>("/videos"),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (query?: string) => requests.get<Video>(`/videos/random${query}`),
+	randomAll: () => requests.get<Video>("/videos/random"),
 	randomPlayed: () => requests.get<Video>("/videos/random/played"),
 	update: (video: Video) =>
 		requests.patch(`/videos/update/${video.id}`, video),

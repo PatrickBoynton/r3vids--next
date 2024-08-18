@@ -6,11 +6,13 @@ import { FullScreen } from "@/app/components/Controls/FullScreen"
 import { ResetVideoStatus } from "@/app/components/Controls/ResetVideoStatus"
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd"
 import { Timer } from "@/app/components/Controls/Timer"
+import { RandomAll } from "@/app/components/Controls/RandomAll"
 
 export const ControlButtons = () => {
 	return (
 		<div className="border-2 p-2 rounded">
 			<PlayPause />
+			<RandomAll />
 			<Random />
 			<RandomPlayed />
 			<ResetVideoStatus />

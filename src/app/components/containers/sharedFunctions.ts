@@ -50,3 +50,11 @@ export const setVideos = () => {
 	useVideoStore.getState().setVideos()
 	useVideoStore.getState().setPlayedVideos()
 }
+
+export const handleRandomAllClick = () => {
+	useVideoStore.getState().setRandomAllVideo()
+	const randomAllVideo = useVideoStore.getState().randomAllVideo as Video
+
+	setState(randomAllVideo)
+	setVideos()
+}
