@@ -18,12 +18,14 @@ const requests = {
 
 const Videos = {
 	list: () => requests.get<Video[]>("/videos"),
+	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (query?: string) => requests.get<Video>(`/videos/random${query}`),
 	randomAll: () => requests.get<Video>("/videos/random"),
 	randomPlayed: () => requests.get<Video>("/videos/random/played"),
 	update: (video: Video) =>
 		requests.patch(`/videos/update/${video.id}`, video),
+	test: (video: any) => requests.put(`/videos/${video.id}`, video),
 	search: (query: string) => requests.get<Video[]>(`/videos/search/${query}`),
 	delete: () => requests.delete<Video>("/videos/reset"),
 }

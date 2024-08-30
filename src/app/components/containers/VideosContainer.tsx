@@ -5,14 +5,13 @@ import {
 	convertDuration,
 	handleClick,
 } from "@/app/components/containers/sharedFunctions"
-import { useEffect } from "react"
 
 type Props = {
 	type: string
 }
 
 export const VideosContainer = ({ type }: Props) => {
-	const { videos, setPlayedVideos, playedVideos } = useVideoStore()
+	const { videos, playedVideos } = useVideoStore()
 
 	const whatType = type === "played" ? playedVideos : videos
 
@@ -27,9 +26,9 @@ export const VideosContainer = ({ type }: Props) => {
 			}
 		})
 
-	useEffect(() => {
-		setPlayedVideos()
-	}, [setPlayedVideos])
+	// useEffect(() => {
+	// 	setPlayedVideos()
+	// }, [setPlayedVideos])
 
 	return (
 		<div

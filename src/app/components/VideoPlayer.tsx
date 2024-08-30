@@ -1,22 +1,19 @@
 "use client"
-import { ControlButtons } from "@/app/components/ControlButtons"
 import { LengthSelect } from "@/app/components/LengthSelect"
 import { useEffect, useRef } from "react"
 import { useVideoStore } from "@/stores/videoStore"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
 import { Video } from "@/types"
 import agent from "@/agent"
+import { ControlButtons } from "@/app/components/ControlButtons"
 
 export const VideoPlayer = () => {
 	const {
 		setRandomVideo,
-		url,
-		title,
+		video,
 		currentVideo,
 		setCurrentVideo,
-		randomVideo,
 		setVideos,
-		currentPlayTime,
 		createVideoNavigation,
 	} = useVideoStore()
 	const { setVidRef, vidRef } = useVideoControlsStore()
@@ -25,16 +22,17 @@ export const VideoPlayer = () => {
 	useEffect(() => {
 		// If there is no current video set it. This is for keeping the video list state up to date. DO NOT CHANGE.
 		const setVids = async () => {
+			console.log("video: ", video)
 			if (!currentVideo) {
 				setCurrentVideo()
 
-				setVideos()
+				// setVideos()
 			} else {
 				setVideos()
 			}
 		}
 		setVids()
-	}, [currentVideo, setRandomVideo, setVideos, setCurrentVideo, randomVideo])
+	}, [currentVideo, setRandomVideo, setVideos, setCurrentVideo, video])
 
 	useEffect(() => {
 		setVidRef(videoRef)
@@ -43,28 +41,33 @@ export const VideoPlayer = () => {
 	useEffect(() => {
 		const getNavigation = async () => {
 			const nav = await agent.VideoNavigation.get()
-			if (randomVideo !== null && nav === null)
-				createVideoNavigation(randomVideo as Video)
+			if (video !== null && nav === null)
+				createVideoNavigation(video as Video)
 		}
 		getNavigation()
-	}, [randomVideo])
+	}, [createVideoNavigation, video])
 
 	// useEffect(() => {
 	// 	createVideoNavigation(randomVideo as Video)
 	// }, [randomVideo, createVideoNavigation])
 
 	vidRef.current?.addEventListener("loadedmetadata", () => {
-		if (vidRef.current) vidRef.current.currentTime = currentPlayTime
+		if (vidRef.current)
+			vidRef.current.currentTime =
+				(video?.videoStatus.currentPlayTime as number) ||
+				currentVideo?.videoStatus.currentPlayTime
 	})
 	return (
 		<div>
-			<h1 className="text-5xl  border-t-2">{title}</h1>
+			<h1 className="text-5xl  border-t-2">
+				{video?.title || currentVideo?.title}
+			</h1>
 			<video
 				className="w-full"
 				ref={videoRef}
-				key={url}
+				key={video?.url || currentVideo?.url}
 				controls
-				src={url}></video>
+				src={video?.url || currentVideo?.url}></video>
 			<div className="p-2">
 				<ControlButtons />
 			</div>

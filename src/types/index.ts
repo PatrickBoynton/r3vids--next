@@ -25,6 +25,8 @@ export type IVideoNavigation = {
 }
 
 export type CurrentVideo = {
-	currentVideo: Video
-	videoStatus: IVideoStatus
+	currentVideo: {
+		currentVideo: Video
+		videoStatus: IVideoStatus
+	}
 }

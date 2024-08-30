@@ -2,28 +2,26 @@ import { Video } from "@/types"
 import { useVideoStore } from "@/stores/videoStore"
 
 export const handleClick = (video?: Video) => {
+	console.log("handleClick")
+	console.log("video", video)
 	if (video) {
-		setState(video)
+		useVideoStore.getState().setCurrentVideo(video)
 	} else {
 		useVideoStore.getState().setRandomPlayedVideo()
 
-		const playedVideo = useVideoStore.getState().randomPlayedVideo as Video
+		const playedVideo = useVideoStore.getState().video as Video
 		setState(playedVideo)
 	}
-
-	setVideos()
 }
 
 export const handleRandomClick = () => {
 	useVideoStore.getState().setRandomVideo()
 
-	const randomVideo = useVideoStore.getState().randomVideo as Video
+	const video = useVideoStore.getState().video as Video
 
-	if (randomVideo) {
-		setState(randomVideo)
+	if (video) {
+		setState(video)
 	}
-
-	setVideos()
 }
 
 export const convertDuration = (duration: number) => {
@@ -41,20 +39,15 @@ export const lessThanTen = (value: number) =>
 
 export const setState = (video: Video) => {
 	if (video) {
-		useVideoStore.getState().setUrl(video.url)
-		useVideoStore.getState().setTitle(video.title)
+		// useVideoStore.getState().setUrl(video.url)
+		// useVideoStore.getState().setTitle(video.title)
 	}
 }
 
-export const setVideos = () => {
-	useVideoStore.getState().setVideos()
-	useVideoStore.getState().setPlayedVideos()
-}
-
 export const handleRandomAllClick = () => {
+	console.log("handleRandomAllClick")
 	useVideoStore.getState().setRandomAllVideo()
-	const randomAllVideo = useVideoStore.getState().randomAllVideo as Video
+	const randomAllVideo = useVideoStore.getState().video as Video
 
 	setState(randomAllVideo)
-	setVideos()
 }

@@ -3,17 +3,15 @@ import { Pause, PlayArrow } from "@mui/icons-material"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
 import { useVideoStore } from "@/stores/videoStore"
 import { useEffect } from "react"
-import { Video } from "@/types"
+import { CurrentVideo, Video } from "@/types"
 
 export const PlayPause = () => {
 	const { isPlaying, setIsPlaying, setIsMuted } = useVideoControlsStore()
-	const {
-		updateVideo,
-		randomVideo,
-		setCurrentPlayTime,
-		currentPlayTime,
-		currentVideo,
-	} = useVideoStore()
+	const { randomVideo, currentVideo, testCall } = useVideoStore() as {
+		randomVideo: Video
+		currentVideo: CurrentVideo
+		testCall: (video: any) => void
+	}
 	const { vidRef } = useVideoControlsStore()
 	const isPaused = vidRef?.current?.paused
 
@@ -29,24 +27,37 @@ export const PlayPause = () => {
 		const currentTime = vidRef?.current?.currentTime
 
 		if (isPlaying && !vidRef.current?.paused) {
-			vidRef.current?.addEventListener("pause", () => {
+			const updatedVideo = {
+				...currentVideo,
+				videoStatus: {
+					...currentVideo.currentVideo.videoStatus,
+					currentPlayTime: currentTime as number,
+				},
+			}
+			vidRef.current?.addEventListener("pause", async () => {
 				setIsPlaying(false)
 
-				setCurrentPlayTime(currentTime as number)
-
-				updateVideo(currentVideo as Video)
+				// setCurrentPlayTime(currentTime as number)
+				// if (currentVideo === null) return
+				// currentVideo.videoStatus.currentPlayTime = currentTime as number
+				console.log("videoToUpdate", updatedVideo.currentVideo)
+				testCall(updatedVideo.currentVideo)
 			})
+
 			vidRef.current.addEventListener("webkitendfullscreen", () => {
 				setIsPlaying(false)
 			})
 			vidRef.current?.pause()
 
-			if (randomVideo !== null) {
-				if (currentTime !== undefined) {
-					randomVideo.videoStatus.currentPlayTime = currentTime
-					updateVideo(randomVideo)
-				}
-			}
+			// if (randomVideo !== null) {
+			// 	if (currentTime !== undefined) {
+			// 		randomVideo.videoStatus.currentPlayTime = currentTime
+			// 		if (currentVideo === null) return
+			//
+			// 		currentVideo.videoStatus.currentPlayTime = currentTime
+			// 		test(updatedVideo as Video)
+			// 	}
+			// }
 		} else {
 			vidRef.current?.addEventListener("play", () => {
 				setIsPlaying(true)
