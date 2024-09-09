@@ -7,7 +7,7 @@ import { CurrentVideo, Video } from "@/types"
 
 export const PlayPause = () => {
 	const { isPlaying, setIsPlaying, setIsMuted } = useVideoControlsStore()
-	const { randomVideo, currentVideo, testCall } = useVideoStore() as {
+	const { currentVideo, testCall } = useVideoStore() as {
 		randomVideo: Video
 		currentVideo: CurrentVideo
 		testCall: (video: any) => void
@@ -40,7 +40,6 @@ export const PlayPause = () => {
 				// setCurrentPlayTime(currentTime as number)
 				// if (currentVideo === null) return
 				// currentVideo.videoStatus.currentPlayTime = currentTime as number
-				console.log("videoToUpdate", updatedVideo.currentVideo)
 				testCall(updatedVideo.currentVideo)
 			})
 
@@ -67,7 +66,7 @@ export const PlayPause = () => {
 	}
 
 	return (
-		<button id="play-pause" onClick={handleClick}>
+		<button id="play-pause" onClick={handleClick} className="mr-3">
 			{!isPlaying && isPaused ? <PlayArrow /> : <Pause />}
 		</button>
 	)
