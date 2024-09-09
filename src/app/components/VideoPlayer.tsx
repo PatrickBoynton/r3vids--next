@@ -22,7 +22,6 @@ export const VideoPlayer = () => {
 	useEffect(() => {
 		// If there is no current video set it. This is for keeping the video list state up to date. DO NOT CHANGE.
 		const setVids = async () => {
-			console.log("video: ", video)
 			if (!currentVideo) {
 				setCurrentVideo()
 

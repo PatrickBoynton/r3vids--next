@@ -2,26 +2,18 @@ import { Video } from "@/types"
 import { useVideoStore } from "@/stores/videoStore"
 
 export const handleClick = (video?: Video) => {
-	console.log("handleClick")
-	console.log("video", video)
 	if (video) {
 		useVideoStore.getState().setCurrentVideo(video)
 	} else {
-		useVideoStore.getState().setRandomPlayedVideo()
+		useVideoStore.getState().setRandomVideo("IsPlayed", "true")
 
 		const playedVideo = useVideoStore.getState().video as Video
 		setState(playedVideo)
 	}
 }
 
-export const handleRandomClick = () => {
-	useVideoStore.getState().setRandomVideo()
-
-	const video = useVideoStore.getState().video as Video
-
-	if (video) {
-		setState(video)
-	}
+export const handleRandomClick = (queryType?: string, queryValue?: string) => {
+	useVideoStore.getState().setRandomVideo(queryType, queryValue)
 }
 
 export const convertDuration = (duration: number) => {
@@ -45,7 +37,6 @@ export const setState = (video: Video) => {
 }
 
 export const handleRandomAllClick = () => {
-	console.log("handleRandomAllClick")
 	useVideoStore.getState().setRandomAllVideo()
 	const randomAllVideo = useVideoStore.getState().video as Video
 

@@ -47,7 +47,7 @@ export const useVideoStore = create<VideoStore>(set => ({
 		const query: any = {}
 
 		if (queryType && queryValue) {
-			query[queryType] = queryValue
+			query[queryType] = queryValue.trim()
 		}
 
 		const url = qs.stringifyUrl(
@@ -77,7 +77,8 @@ export const useVideoStore = create<VideoStore>(set => ({
 	},
 
 	setRandomPlayedVideo: async () => {
-		const randomPlayedVideo: Video = await agent.Videos.randomPlayed()
+		const randomPlayedVideo: Video =
+			await agent.Videos.randomPlayed("?IsPlayed=true")
 
 		set(state => ({
 			...state,
@@ -90,14 +91,12 @@ export const useVideoStore = create<VideoStore>(set => ({
 	},
 
 	updateVideo: async (video: Video) => {
-		console.log("UPDATE VIDEO")
 		await agent.Videos.update(video)
 	},
 
 	resetVideoStatus: async () => {
 		await agent.Videos.delete()
 		const playedVideos = await agent.Videos.played()
-		console.log("RESET VIDEO STATUS")
 		set(state => ({ ...state, playedVideos, currentVideo: null }))
 	},
 

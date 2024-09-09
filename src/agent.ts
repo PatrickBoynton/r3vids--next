@@ -21,8 +21,9 @@ const Videos = {
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (query?: string) => requests.get<Video>(`/videos/random${query}`),
-	randomAll: () => requests.get<Video>("/videos/random"),
-	randomPlayed: () => requests.get<Video>("/videos/random/played"),
+	randomAll: () => requests.get<Video>(`/videos/random/ `),
+	randomPlayed: (query?: string) =>
+		requests.get<Video>(`/videos/random/${query}`),
 	update: (video: Video) =>
 		requests.patch(`/videos/update/${video.id}`, video),
 	test: (video: any) => requests.put(`/videos/${video.id}`, video),
@@ -51,6 +52,15 @@ const VideoNavigation = {
 	delete: () => requests.delete("/navigation"),
 }
 
-const agent = { Videos, VideoStatus, VideoNavigation }
+const Playlist = {
+	list: () => requests.get<Video[]>("/playlist"),
+	get: (id: string) => requests.get<Video>(`/playlist/${id}`),
+	create: (video: Video) => requests.post<Video>("/playlist", video),
+	update: (video: Video) =>
+		requests.put<Video>(`/playlist/${video.id}`, video),
+	delete: (id: string) => requests.delete<Video>(`/playlist/${id}`),
+}
+
+const agent = { Videos, VideoStatus, VideoNavigation, Playlist }
 
 export default agent

@@ -3,7 +3,7 @@ import { handleRandomAllClick } from "@/app/components/containers/sharedFunction
 
 export const RandomAll = () => {
 	return (
-		<button onClick={() => handleRandomAllClick()}>
+		<button onClick={() => handleRandomAllClick()} className="mr-3">
 			<Shuffle />
 		</button>
 	)
