@@ -14,7 +14,6 @@ export const getIpAddress = () => {
 			const baseUrl = `http://${config.ipAddress}:5070/api`
 
 			axios.defaults.baseURL = baseUrl
-			console.log(`Axios base URL updated to: ${baseUrl}`)
 		} catch (e) {
 			console.error(e)
 		}
