@@ -54,19 +54,19 @@ export const VideoPlayer = () => {
 		if (vidRef.current)
 			vidRef.current.currentTime =
 				(video?.videoStatus.currentPlayTime as number) ||
-				currentVideo?.videoStatus.currentPlayTime
+				(currentVideo as Video)?.videoStatus.currentPlayTime
 	})
 	return (
 		<div>
 			<h1 className="text-5xl  border-t-2">
-				{video?.title || currentVideo?.title}
+				{video?.title || (currentVideo as Video)?.title}
 			</h1>
 			<video
 				className="w-full"
 				ref={videoRef}
-				key={video?.url || currentVideo?.url}
+				key={video?.url || (currentVideo as Video)?.url}
 				controls
-				src={video?.url || currentVideo?.url}></video>
+				src={video?.url || (currentVideo as Video)?.url}></video>
 			<div className="p-2">
 				<ControlButtons />
 			</div>
