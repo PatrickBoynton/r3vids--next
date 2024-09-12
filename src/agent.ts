@@ -20,8 +20,11 @@ const Videos = {
 	list: () => requests.get<Video[]>("/videos"),
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
-	random: (query?: string) => requests.get<Video>(`/videos/random${query}`),
-	randomAll: () => requests.get<Video>(`/videos/random/ `),
+	random: (query?: string) => {
+		requests.get<Video>(`/videos/random${query}`)
+	},
+	randomAll: (query?: string) =>
+		requests.get<Video>(`/videos/random/${query} `),
 	randomPlayed: (query?: string) =>
 		requests.get<Video>(`/videos/random/${query}`),
 	update: (video: Video) =>
