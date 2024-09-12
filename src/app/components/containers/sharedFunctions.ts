@@ -37,8 +37,6 @@ export const setState = (video: Video) => {
 }
 
 export const handleRandomAllClick = () => {
-	useVideoStore.getState().setRandomAllVideo()
-	const randomAllVideo = useVideoStore.getState().video as Video
-
-	setState(randomAllVideo)
+	const query = useVideoStore.getState().query
+	useVideoStore.getState().setRandomAllVideo(query)
 }
