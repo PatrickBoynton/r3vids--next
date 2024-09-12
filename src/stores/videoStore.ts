@@ -15,7 +15,7 @@ type VideoStore = {
 	randomAllVideo: Video | null
 	setVideos: () => void
 	setRandomVideo: (queryType?: string, queryValue?: string) => void
-	setRandomAllVideo: () => void
+	setRandomAllVideo: (query?: string) => void
 	setPlayedVideos: () => void
 	setRandomPlayedVideo: () => void
 	updateVideo: (video: Video) => void
@@ -45,16 +45,16 @@ export const useVideoStore = create<VideoStore>(set => ({
 
 	setRandomVideo: async (queryType?: string, queryValue?: string) => {
 		const query: any = {}
-
 		if (queryType && queryValue) {
-			query[queryType] = queryValue.trim()
+			query[queryType] =
+				queryValue.trim() + useVideoStore.getState().query
 		}
 
 		const url = qs.stringifyUrl(
 			{ url: "", query },
 			{ skipEmptyString: true }
 		)
-		const randomVideo: Video = await agent.Videos.random(url)
+		const randomVideo: any = await agent.Videos.random(url)
 
 		set(state => ({
 			...state,
@@ -116,8 +116,8 @@ export const useVideoStore = create<VideoStore>(set => ({
 	createVideoNavigation: async (video: Video) => {
 		await agent.VideoNavigation.create(video)
 	},
-	setRandomAllVideo: async () => {
-		const randomAllVideo: Video = await agent.Videos.randomAll()
+	setRandomAllVideo: async (query?: string) => {
+		const randomAllVideo: Video = await agent.Videos.randomAll(query)
 
 		set(state => ({
 			...state,
