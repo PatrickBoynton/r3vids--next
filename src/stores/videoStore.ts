@@ -57,17 +57,21 @@ export const useVideoStore = create<VideoStore>(set => ({
 			{ url: "", query },
 			{ skipEmptyString: true }
 		)
-		const randomVideo: any = await agent.Videos.random(url)
+
+		const randomVideo = await agent.Videos.random(url)
 
 		set(state => ({
 			...state,
 			video: randomVideo,
-			randomVideo,
 			currentVideo: randomVideo,
 		}))
 
-		await agent.Videos.update(randomVideo)
-		await agent.VideoNavigation.update(randomVideo)
+		if (randomVideo !== undefined) {
+			await agent.Videos.update(randomVideo)
+			await agent.VideoNavigation.update(randomVideo)
+		} else {
+			console.log("No video found")
+		}
 	},
 
 	setPlayedVideos: async () => {

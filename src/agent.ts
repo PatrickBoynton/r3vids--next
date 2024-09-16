@@ -21,7 +21,8 @@ const Videos = {
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (query?: string) => {
-		requests.get<Video>(`/videos/random${query}`)
+		const url = `/videos/random${query}`
+		return requests.get<Video>(url)
 	},
 	randomAll: (query?: string) =>
 		requests.get<Video>(`/videos/random/${query} `),
