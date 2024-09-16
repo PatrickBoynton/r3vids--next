@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
 
-axios.defaults.baseURL = `http://192.168.1.8:5070/api`
+axios.defaults.baseURL = `http://192.168.1.9:5070/api`
 // getIpAddress()
 const responseBody = (response: AxiosResponse) => response.data
 
@@ -64,6 +64,11 @@ const Playlist = {
 	delete: (id: string) => requests.delete<Video>(`/playlist/${id}`),
 }
 
-const agent = { Videos, VideoStatus, VideoNavigation, Playlist }
+const Search = {
+	search: (query: string) =>
+		requests.get<Video[]>(`/videos/search/?title=${query}`),
+}
+
+const agent = { Videos, VideoStatus, VideoNavigation, Playlist, Search }
 
 export default agent
