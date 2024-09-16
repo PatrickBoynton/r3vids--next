@@ -29,18 +29,17 @@ export const PlayPause = () => {
 		if (isPlaying && !vidRef.current?.paused) {
 			const updatedVideo = {
 				...currentVideo,
+				...currentVideo.currentVideo,
 				videoStatus: {
-					...currentVideo.currentVideo.videoStatus,
 					currentPlayTime: currentTime as number,
 				},
 			}
 			vidRef.current?.addEventListener("pause", async () => {
 				setIsPlaying(false)
+				if (currentVideo === undefined) return
+				updatedVideo.videoStatus.currentPlayTime = currentTime as number
 
-				// setCurrentPlayTime(currentTime as number)
-				// if (currentVideo === null) return
-				// currentVideo.videoStatus.currentPlayTime = currentTime as number
-				testCall(updatedVideo.currentVideo)
+				testCall(updatedVideo)
 			})
 
 			vidRef.current.addEventListener("webkitendfullscreen", () => {
