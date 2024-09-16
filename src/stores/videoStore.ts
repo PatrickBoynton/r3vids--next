@@ -6,6 +6,7 @@ import agent from "@/agent"
 type VideoStore = {
 	video: Video | null
 	query: string
+	searchTerm: string
 	value: string
 	videos: Video[]
 	playedVideos: Video[]
@@ -24,11 +25,13 @@ type VideoStore = {
 	setQuery: (query: string) => void
 	setCurrentVideo: (video?: Video) => void
 	createVideoNavigation: (video: Video) => void
+	setSearchTerm: (searchTerm: string) => void
 }
 
 export const useVideoStore = create<VideoStore>(set => ({
 	video: null,
 	query: "",
+	searchTerm: "",
 	value: "",
 	videos: [],
 	playedVideos: [],
@@ -130,4 +133,5 @@ export const useVideoStore = create<VideoStore>(set => ({
 	testCall: async (video: any) => {
 		await agent.Videos.test(video)
 	},
+	setSearchTerm: (searchTerm: string) => set({ searchTerm }),
 }))

@@ -5,8 +5,12 @@ import {
 	Search,
 	SlowMotionVideo,
 } from "@mui/icons-material"
+import { useVideoStore } from "@/stores/videoStore"
+import agent from "@/agent"
 
 export const Navbar = () => {
+	const { setSearchTerm, searchTerm } = useVideoStore()
+
 	return (
 		<nav className="p-3">
 			<ul className="flex justify-between">
@@ -15,7 +19,10 @@ export const Navbar = () => {
 				</li>
 				<li>
 					<input
-						onChange={() => {}}
+						onChange={async e => {
+							setSearchTerm(e.target.value)
+							await agent.Search.search(searchTerm)
+						}}
 						type="text"
 						name="search"
 						id="search"
