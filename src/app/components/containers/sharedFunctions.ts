@@ -1,9 +1,13 @@
 import { Video } from "@/types"
 import { useVideoStore } from "@/stores/videoStore"
+import agent from "@/agent"
 
-export const handleClick = (video?: Video) => {
+export const handleClick = async (video?: Video) => {
 	if (video) {
 		useVideoStore.getState().setCurrentVideo(video)
+		useVideoStore.getState().updateVideo(video)
+		useVideoStore.getState().setVideos()
+		await agent.VideoNavigation.update(video)
 	} else {
 		useVideoStore.getState().setRandomVideo("IsPlayed", "true")
 

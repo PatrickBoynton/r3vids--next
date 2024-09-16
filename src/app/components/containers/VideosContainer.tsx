@@ -26,10 +26,6 @@ export const VideosContainer = ({ type }: Props) => {
 			}
 		})
 
-	// useEffect(() => {
-	// 	setPlayedVideos()
-	// }, [setPlayedVideos])
-
 	return (
 		<div
 			className={`${type}-container ${type === "played" ? "flex overflow-y-auto  " : " overflow-auto  max-h-[80vh]"}`}>
