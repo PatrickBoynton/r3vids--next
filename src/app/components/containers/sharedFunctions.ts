@@ -10,9 +10,6 @@ export const handleClick = async (video?: Video) => {
 		await agent.VideoNavigation.update(video)
 	} else {
 		useVideoStore.getState().setRandomVideo("IsPlayed", "true")
-
-		const playedVideo = useVideoStore.getState().video as Video
-		setState(playedVideo)
 	}
 }
 
@@ -33,14 +30,7 @@ export const convertDuration = (duration: number) => {
 export const lessThanTen = (value: number) =>
 	value < 10 && value !== 1 ? `0${value}` : value
 
-export const setState = (video: Video) => {
-	if (video) {
-		// useVideoStore.getState().setUrl(video.url)
-		// useVideoStore.getState().setTitle(video.title)
-	}
-}
-
 export const handleRandomAllClick = () => {
 	const query = useVideoStore.getState().query
-	useVideoStore.getState().setRandomAllVideo(query)
+	useVideoStore.getState().setRandomVideo(query)
 }
