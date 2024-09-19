@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
+import { useVideoStore } from "@/stores/videoStore"
 
 axios.defaults.baseURL = `http://192.168.1.9:5070/api`
 // getIpAddress()
@@ -20,17 +21,17 @@ const Videos = {
 	list: () => requests.get<Video[]>("/videos"),
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
-	random: (query?: string) => {
-		const url = `/videos/random${query}`
+	random: (isPlayedQuery?: string) => {
+		const query = useVideoStore.getState().query
+		const url = isPlayedQuery
+			? `/videos/random${query} + ${isPlayedQuery}`
+			: `/videos/random${query}`
+		console.log("url", url)
 		return requests.get<Video>(url)
 	},
-	randomAll: (query?: string) =>
-		requests.get<Video>(`/videos/random/${query} `),
-	randomPlayed: (query?: string) =>
-		requests.get<Video>(`/videos/random/${query}`),
 	update: (video: Video) =>
 		requests.patch(`/videos/update/${video.id}`, video),
-	test: (video: any) => requests.put(`/videos/${video.id}`, video),
+	test: (video: Video) => requests.put(`/videos/${video.id}`, video),
 	search: (query: string) => requests.get<Video[]>(`/videos/search/${query}`),
 	delete: () => requests.delete<Video>("/videos/reset"),
 }
