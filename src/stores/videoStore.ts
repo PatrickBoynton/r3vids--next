@@ -1,6 +1,5 @@
 import { CurrentVideo, Video } from "@/types"
 import { create } from "zustand"
-import qs from "query-string"
 import agent from "@/agent"
 
 type VideoStore = {
@@ -47,18 +46,13 @@ export const useVideoStore = create<VideoStore>(set => ({
 	},
 
 	setRandomVideo: async (queryType?: string, queryValue?: string) => {
-		const query: any = {}
+		let query = useVideoStore.getState().query
+
 		if (queryType && queryValue) {
-			query[queryType] =
-				queryValue.trim() + useVideoStore.getState().query
+			query = `${queryType}=${queryValue}`
 		}
 
-		const url = qs.stringifyUrl(
-			{ url: "", query },
-			{ skipEmptyString: true }
-		)
-
-		const randomVideo = await agent.Videos.random(url)
+		const randomVideo = await agent.Videos.random(query)
 
 		set(state => ({
 			...state,
@@ -85,7 +79,7 @@ export const useVideoStore = create<VideoStore>(set => ({
 
 	setRandomPlayedVideo: async () => {
 		const randomPlayedVideo: Video =
-			await agent.Videos.randomPlayed("?IsPlayed=true")
+			await agent.Videos.random("&IsPlayed=true")
 
 		set(state => ({
 			...state,
@@ -124,7 +118,7 @@ export const useVideoStore = create<VideoStore>(set => ({
 		await agent.VideoNavigation.create(video)
 	},
 	setRandomAllVideo: async (query?: string) => {
-		const randomAllVideo: Video = await agent.Videos.randomAll(query)
+		const randomAllVideo: Video = await agent.Videos.random(query)
 
 		set(state => ({
 			...state,

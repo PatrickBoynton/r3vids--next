@@ -5,7 +5,7 @@ export const Random = () => {
 	return (
 		<button
 			id="random"
-			onClick={() => handleRandomClick("IsPlayed", "false	")}
+			onClick={() => handleRandomClick("IsPlayed", "false")}
 			className="mr-3">
 			<AutoMode />
 		</button>

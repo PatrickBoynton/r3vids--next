@@ -22,9 +22,10 @@ const Videos = {
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (isPlayedQuery?: string) => {
+		console.log("isPlayedQuery", isPlayedQuery)
 		const query = useVideoStore.getState().query
-		const url = isPlayedQuery
-			? `/videos/random${query} + ${isPlayedQuery}`
+		const url = isPlayedQuery?.includes("IsPlayed")
+			? `/videos/random${query}&${isPlayedQuery}`
 			: `/videos/random${query}`
 		console.log("url", url)
 		return requests.get<Video>(url)
