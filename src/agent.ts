@@ -27,7 +27,7 @@ const Videos = {
 		console.log("isPlayedQuery", isPlayedQuery)
 		const query = useVideoStore.getState().query
 		const url = isPlayedQuery?.includes("IsPlayed")
-			? `/videos/random?${isPlayedQuery}`
+			? `/videos/random${query}&${isPlayedQuery}`
 			: `/videos/random${query}`
 		console.log("url", url)
 		return requests.get<Video>(url)
