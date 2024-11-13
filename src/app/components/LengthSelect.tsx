@@ -3,36 +3,34 @@ import { ChangeEvent } from "react"
 
 export const LengthSelect = () => {
 	const { setQuery } = useVideoStore()
+	const switchReturn = (value: string) => {
+		switch (value) {
+			case "< 10":
+				return "?Duration=600&Type=lte"
+			case "< 20":
+				return "?Duration=1200&Type=lte"
+			case "< 30":
+				return "?Duration=1800&Type=lte"
+			case "< 40":
+				return "?Duration=2400&Type=lte"
+			case "< 60":
+				return "?Duration=3600&Type=lte"
+			case "> 20":
+				return "?Duration=1200&Type=gte"
+			case "> 30":
+				return "?Duration=1800&Type=gte"
+			case "> 40":
+				return "?Duration=2400&Type=gte"
+			case "> 60":
+				return "?Duration=3600&Type=gte"
+			default:
+				return ""
+		}
+	}
 
 	const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value
-
-		switch (value) {
-			case "< 10":
-				setQuery("?Duration=600&Type=lte")
-				break
-			case "< 20":
-				setQuery("?Duration=1200&Type=lte")
-				break
-			case "< 30":
-				setQuery("?Duration=1800&Type=lte")
-				break
-			case "< 40":
-				setQuery("?Duration=2400&Type=lte")
-				break
-			case "> 20":
-				setQuery("?Duration=1200&Type=gte")
-				break
-			case "> 30":
-				setQuery("?Duration=1800&Type=gte")
-				break
-			case "> 40":
-				setQuery("?Duration=2400&Type=gte")
-				break
-			default:
-				setQuery("")
-				break
-		}
+		if (value) setQuery(switchReturn(value) as string)
 	}
 
 	return (
@@ -46,9 +44,11 @@ export const LengthSelect = () => {
 			<option value="< 20">{"< 20 minutes"}</option>
 			<option value="< 30">{"< 30 minutes"}</option>
 			<option value="< 40">{"< 40  minutes"}</option>
+			<option value="< 60">{"< 60 minutes"}</option>
 			<option value="> 20">{"> 20 minutes"}</option>
 			<option value="> 30">{"> 30 minutes"}</option>
 			<option value="> 40">{"> 40  minutes"}</option>
+			<option value="> 60">{"> 60 minutes"}</option>
 		</select>
 	)
 }
