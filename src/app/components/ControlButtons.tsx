@@ -4,7 +4,6 @@ import { RandomPlayed } from "@/app/components/Controls/RandomPlayed"
 import { Volume } from "@/app/components/Controls/Volume"
 import { FullScreen } from "@/app/components/Controls/FullScreen"
 import { ResetVideoStatus } from "@/app/components/Controls/ResetVideoStatus"
-import AlarmAddIcon from "@mui/icons-material/AlarmAdd"
 import { Timer } from "@/app/components/Controls/Timer"
 import { RandomAll } from "@/app/components/Controls/RandomAll"
 
@@ -19,9 +18,6 @@ export const ControlButtons = () => {
 			<Timer />
 			<Volume />
 			<FullScreen />
-			<button id="watch-later">
-				<AlarmAddIcon />
-			</button>
 		</div>
 	)
 }
