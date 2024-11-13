@@ -8,6 +8,7 @@ type VideoStore = {
 	searchTerm: string
 	value: string
 	videos: Video[]
+	searchVideos: Video[]
 	playedVideos: Video[]
 	randomVideo: Video | null
 	currentVideo: CurrentVideo | Video | null
@@ -25,6 +26,8 @@ type VideoStore = {
 	setCurrentVideo: (video?: Video) => void
 	createVideoNavigation: (video: Video) => void
 	setSearchTerm: (searchTerm: string) => void
+	setSearchVideos: () => void
+	setVideo: (video: Video) => void
 }
 
 export const useVideoStore = create<VideoStore>(set => ({
@@ -33,6 +36,7 @@ export const useVideoStore = create<VideoStore>(set => ({
 	searchTerm: "",
 	value: "",
 	videos: [],
+	searchVideos: [],
 	playedVideos: [],
 	randomVideo: null,
 	randomPlayedVideo: null,
@@ -132,4 +136,16 @@ export const useVideoStore = create<VideoStore>(set => ({
 		await agent.Videos.test(video)
 	},
 	setSearchTerm: (searchTerm: string) => set({ searchTerm }),
+	setSearchVideos: async () => {
+		const videos = await agent.Search.search(
+			useVideoStore.getState().searchTerm
+		)
+		set(state => ({
+			...state,
+			searchVideos: videos,
+		}))
+	},
+	setVideo: async video => {
+		set(state => ({ ...state, video }))
+	},
 }))

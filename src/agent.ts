@@ -2,8 +2,10 @@ import axios, { AxiosResponse } from "axios"
 import { IVideoNavigation, IVideoStatus, Video } from "./types"
 import { useVideoStore } from "@/stores/videoStore"
 
-axios.defaults.baseURL = `http://192.168.1.9:5070/api`
-// getIpAddress()
+// The variable  is set in the .env file which is at the root of the program.
+// This is set automatically by another script.
+axios.defaults.baseURL = `http://${process.env.NEXT_PUBLIC_IP_ADDRESS}:5070/api`
+
 const responseBody = (response: AxiosResponse) => response.data
 
 const requests = {
@@ -25,7 +27,7 @@ const Videos = {
 		console.log("isPlayedQuery", isPlayedQuery)
 		const query = useVideoStore.getState().query
 		const url = isPlayedQuery?.includes("IsPlayed")
-			? `/videos/random${query}&${isPlayedQuery}`
+			? `/videos/random?${isPlayedQuery}`
 			: `/videos/random${query}`
 		console.log("url", url)
 		return requests.get<Video>(url)

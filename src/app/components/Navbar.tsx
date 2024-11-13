@@ -6,10 +6,10 @@ import {
 	SlowMotionVideo,
 } from "@mui/icons-material"
 import { useVideoStore } from "@/stores/videoStore"
-import agent from "@/agent"
+import { SearchResult } from "@/app/components/SearchResult"
 
 export const Navbar = () => {
-	const { setSearchTerm, searchTerm } = useVideoStore()
+	const { setSearchTerm, setSearchVideos } = useVideoStore()
 
 	return (
 		<nav className="p-3">
@@ -17,11 +17,11 @@ export const Navbar = () => {
 				<li id="slow">
 					<SlowMotionVideo /> R3vids
 				</li>
-				<li>
+				<li className="relative">
 					<input
 						onChange={async e => {
 							setSearchTerm(e.target.value)
-							await agent.Search.search(searchTerm)
+							setSearchVideos()
 						}}
 						type="text"
 						name="search"
@@ -32,6 +32,7 @@ export const Navbar = () => {
 					<label htmlFor="search">
 						<Search />
 					</label>
+					<SearchResult />
 				</li>
 				<li id="notify">
 					<Notifications />
