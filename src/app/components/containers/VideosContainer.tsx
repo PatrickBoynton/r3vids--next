@@ -39,7 +39,11 @@ export const VideosContainer = ({ type }: Props) => {
 							<h3 className="border-2 p-1 rounded">
 								{video.title}
 							</h3>
-							<p>{video.videoStatus.playCount}</p>
+							<p>Play Count - {video.videoStatus.playCount}</p>
+							<p>
+								Selection Count -
+								{video.videoStatus.selectionCount}
+							</p>
 							<p>{convertDuration(video.duration)}</p>
 							<p>{video.url}</p>
 						</div>
