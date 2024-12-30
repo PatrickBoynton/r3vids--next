@@ -41,7 +41,7 @@ export const VideosContainer = ({ type }: Props) => {
 							</h3>
 							<p>Play Count - {video.videoStatus.playCount}</p>
 							<p>
-								Selection Count -
+								Selection Count -{" "}
 								{video.videoStatus.selectionCount}
 							</p>
 							<p>{convertDuration(video.duration)}</p>
