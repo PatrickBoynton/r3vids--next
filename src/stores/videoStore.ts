@@ -65,10 +65,16 @@ export const useVideoStore = create<VideoStore>(set => ({
 		}))
 
 		if (randomVideo !== undefined) {
-			await agent.Videos.update(randomVideo)
+			const date = new Date().toISOString()
+
+			randomVideo.videoStatus.LastPlayed = date
+			randomVideo.videoStatus.played = true
+			randomVideo.videoStatus.playCount++
+
+			await agent.Videos.test(randomVideo)
 			await agent.VideoNavigation.update(randomVideo)
 		} else {
-			console.log("No video found")
+			console.error("No video found")
 		}
 	},
 
@@ -91,12 +97,12 @@ export const useVideoStore = create<VideoStore>(set => ({
 			randomPlayedVideo,
 		}))
 
-		await agent.Videos.update(randomPlayedVideo)
+		await agent.Videos.test(randomPlayedVideo)
 		await agent.VideoNavigation.update(randomPlayedVideo)
 	},
 
 	updateVideo: async (video: Video) => {
-		await agent.Videos.update(video)
+		await agent.Videos.test(video)
 	},
 
 	resetVideoStatus: async () => {
