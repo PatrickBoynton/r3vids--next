@@ -5,9 +5,9 @@ export type Video = {
 	image: string
 	uploadDate: string
 	duration: number
-	videoStatus: IVideoStatus
+	videoStatus: VideoStatus
 }
-export type IVideoStatus = {
+export type VideoStatus = {
 	id: string
 	played: boolean
 	currentPlayTime: number
@@ -19,7 +19,7 @@ export type IVideoStatus = {
 	videoId: string
 }
 
-export type IVideoNavigation = {
+export type VideoNavigation = {
 	id: string
 	currentVideo?: Video
 	previousVideo?: Video
@@ -28,6 +28,6 @@ export type IVideoNavigation = {
 export type CurrentVideo = {
 	currentVideo: {
 		currentVideo: Video
-		videoStatus: IVideoStatus
+		videoStatus: VideoStatus
 	}
 }
