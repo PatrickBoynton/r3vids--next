@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios"
-import { IVideoNavigation, IVideoStatus, Video } from "./types"
+import { Video, VideoNavigation, VideoStatus } from "./types"
 import { useVideoStore } from "@/stores/videoStore"
 
 // The variable  is set in the .env file which is at the root of the program.
@@ -24,12 +24,10 @@ const Videos = {
 	get: (id: string) => requests.get<Video>(`/videos/${id}`),
 	played: () => requests.get<Video[]>("/videos/played"),
 	random: (isPlayedQuery?: string) => {
-		console.log("isPlayedQuery", isPlayedQuery)
 		const query = useVideoStore.getState().query
 		const url = isPlayedQuery?.includes("IsPlayed")
 			? `/videos/random${query}&${isPlayedQuery}`
 			: `/videos/random${query}`
-		console.log("url", url)
 		return requests.get<Video>(url)
 	},
 	update: (video: Video) =>
@@ -40,14 +38,13 @@ const Videos = {
 }
 
 const VideoStatus = {
-	list: () => requests.get<IVideoStatus[]>("/status"),
-	status: (id: string) => requests.get<IVideoStatus>(`/status/${id}`),
+	list: () => requests.get<VideoStatus[]>("/status"),
 }
 
 const VideoNavigation = {
 	get: () => requests.get<Video>("/navigation"),
 	create: (video: Video) =>
-		requests.post<IVideoNavigation>("/navigation", {
+		requests.post<VideoNavigation>("/navigation", {
 			currentVideo: video.id,
 			previousVideo: null,
 		}),
