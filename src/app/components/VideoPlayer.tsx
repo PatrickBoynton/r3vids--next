@@ -1,11 +1,11 @@
 "use client"
-import { LengthSelect } from "@/app/components/LengthSelect"
-import { useEffect, useRef } from "react"
-import { useVideoStore } from "@/stores/videoStore"
-import { useVideoControlsStore } from "@/stores/videoControlsStore"
-import { Video } from "@/types"
 import agent from "@/agent"
 import { ControlButtons } from "@/app/components/ControlButtons"
+import { LengthSelect } from "@/app/components/LengthSelect"
+import { useVideoControlsStore } from "@/stores/videoControlsStore"
+import { useVideoStore } from "@/stores/videoStore"
+import { Video } from "@/types"
+import { useEffect, useRef } from "react"
 
 export const VideoPlayer = () => {
 	const {
@@ -16,7 +16,7 @@ export const VideoPlayer = () => {
 		setVideos,
 		createVideoNavigation,
 	} = useVideoStore()
-	const { setVidRef, vidRef } = useVideoControlsStore()
+	const { setVidRef, vidRef, isFullScreen } = useVideoControlsStore()
 	const videoRef = useRef<HTMLVideoElement>(null)
 
 	useEffect(() => {
@@ -46,9 +46,6 @@ export const VideoPlayer = () => {
 		getNavigation()
 	}, [createVideoNavigation, video])
 
-	// useEffect(() => {
-	// 	createVideoNavigation(randomVideo as Video)
-	// }, [randomVideo, createVideoNavigation])
 
 	vidRef.current?.addEventListener("loadedmetadata", () => {
 		if (vidRef.current)
@@ -56,16 +53,17 @@ export const VideoPlayer = () => {
 				(video?.videoStatus.currentPlayTime as number) ||
 				(currentVideo as Video)?.videoStatus.currentPlayTime
 	})
+
 	return (
 		<div>
 			<h1 className="text-5xl  border-t-2">
 				{video?.title || (currentVideo as Video)?.title}
 			</h1>
 			<video
+				controls={isFullScreen ? true : false}
 				className="w-full"
 				ref={videoRef}
 				key={video?.url || (currentVideo as Video)?.url}
-				controls
 				src={video?.url || (currentVideo as Video)?.url}></video>
 			<div className="p-2">
 				<ControlButtons />

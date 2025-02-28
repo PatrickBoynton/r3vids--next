@@ -1,6 +1,7 @@
-import { Video } from "@/types"
-import { useVideoStore } from "@/stores/videoStore"
 import agent from "@/agent"
+import { useVideoControlsStore } from "@/stores/videoControlsStore"
+import { useVideoStore } from "@/stores/videoStore"
+import { Video } from "@/types"
 
 export const handleClick = async (video?: Video) => {
 	if (video) {
@@ -14,6 +15,9 @@ export const handleClick = async (video?: Video) => {
 }
 
 export const handleRandomClick = (queryType?: string, queryValue?: string) => {
+	useVideoControlsStore.getState().setIsPlaying(false)
+	useVideoControlsStore.getState().setIsMuted(false)
+	
 	useVideoStore.getState().setRandomVideo(queryType, queryValue)
 }
 
@@ -31,6 +35,9 @@ export const lessThanTen = (value: number) =>
 	value < 10 && value !== 1 ? `0${value}` : value
 
 export const handleRandomAllClick = () => {
+	useVideoControlsStore.getState().setIsPlaying(false)
+	useVideoControlsStore.getState().setIsMuted(false)
+
 	const query = useVideoStore.getState().query
 	useVideoStore.getState().setRandomVideo(query)
 }

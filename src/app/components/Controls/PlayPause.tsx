@@ -1,14 +1,13 @@
 "use client"
-import { Pause, PlayArrow } from "@mui/icons-material"
 import { useVideoControlsStore } from "@/stores/videoControlsStore"
 import { useVideoStore } from "@/stores/videoStore"
+import { CurrentVideo } from "@/types"
+import { Pause, PlayArrow } from "@mui/icons-material"
 import { useEffect } from "react"
-import { CurrentVideo, Video } from "@/types"
 
 export const PlayPause = () => {
 	const { isPlaying, setIsPlaying, setIsMuted } = useVideoControlsStore()
-	const { currentVideo, testCall } = useVideoStore() as {
-		randomVideo: Video
+	let { currentVideo, testCall } = useVideoStore() as {
 		currentVideo: CurrentVideo
 		testCall: (video: any) => void
 	}
@@ -46,21 +45,11 @@ export const PlayPause = () => {
 				setIsPlaying(false)
 			})
 			vidRef.current?.pause()
-
-			// if (randomVideo !== null) {
-			// 	if (currentTime !== undefined) {
-			// 		randomVideo.videoStatus.currentPlayTime = currentTime
-			// 		if (currentVideo === null) return
-			//
-			// 		currentVideo.videoStatus.currentPlayTime = currentTime
-			// 		test(updatedVideo as Video)
-			// 	}
-			// }
+			setIsPlaying(false)
 		} else {
-			vidRef.current?.addEventListener("play", () => {
-				setIsPlaying(true)
-			})
 			await vidRef.current?.play()
+			currentVideo.videoStatus.selectionCount++
+			testCall(currentVideo)
 		}
 	}
 
