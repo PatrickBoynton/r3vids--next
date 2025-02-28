@@ -16,7 +16,7 @@ export const VideoPlayer = () => {
 		setVideos,
 		createVideoNavigation,
 	} = useVideoStore()
-	const { setVidRef, vidRef, isFullScreen } = useVideoControlsStore()
+	const { setVidRef, vidRef, isFullScreen, setIsFullScreen } = useVideoControlsStore()
 	const videoRef = useRef<HTMLVideoElement>(null)
 
 	useEffect(() => {
@@ -52,6 +52,14 @@ export const VideoPlayer = () => {
 			vidRef.current.currentTime =
 				(video?.videoStatus.currentPlayTime as number) ||
 				(currentVideo as Video)?.videoStatus.currentPlayTime
+	})
+
+	vidRef.current?.addEventListener("fullscreenchange", () => {
+		if(document.fullscreenElement) {
+			setIsFullScreen(true)
+		} else {
+			setIsFullScreen(false)
+		}
 	})
 
 	return (
